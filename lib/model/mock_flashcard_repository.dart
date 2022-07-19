@@ -15,58 +15,58 @@ class MockFlashcardsRepository implements FlashcardsRepository {
     Collection(
       collectionName: 'animals',
       flashcards: [
-        Flashcard(frontSide: 'platypus', backSide: 'утконос'),
-        Flashcard(frontSide: 'cat', backSide: 'кошка'),
-        Flashcard(frontSide: 'dog', backSide: 'собака'),
-        Flashcard(frontSide: 'duck', backSide: 'утка'),
-        Flashcard(frontSide: 'ape', backSide: 'обезьяна'),
-        Flashcard(frontSide: 'lion', backSide: 'лев'),
-        Flashcard(frontSide: 'horse', backSide: 'лошадь'),
-        Flashcard(frontSide: 'monkey', backSide: 'обезьяна'),
+        Flashcard(
+            frontSide: 'platypus', backSide: 'утконос', isFavorite: false),
+        Flashcard(frontSide: 'cat', backSide: 'кошка', isFavorite: false),
+        Flashcard(frontSide: 'dog', backSide: 'собака', isFavorite: false),
+        Flashcard(frontSide: 'duck', backSide: 'утка', isFavorite: false),
+        Flashcard(frontSide: 'ape', backSide: 'обезьяна', isFavorite: false),
+        Flashcard(frontSide: 'lion', backSide: 'лев', isFavorite: false),
+        Flashcard(frontSide: 'horse', backSide: 'лошадь', isFavorite: false),
+        Flashcard(frontSide: 'monkey', backSide: 'обезьяна', isFavorite: false),
       ],
     ),
     Collection(
       collectionName: 'family',
       flashcards: [
-        Flashcard(frontSide: 'father', backSide: 'отец'),
-        Flashcard(frontSide: 'mother', backSide: 'мать'),
-        Flashcard(frontSide: 'son', backSide: 'сын'),
-        Flashcard(frontSide: 'daughter', backSide: 'дочь'),
-        Flashcard(frontSide: 'brother', backSide: 'брат'),
-        Flashcard(frontSide: 'husband', backSide: 'муж'),
-        Flashcard(frontSide: 'wife', backSide: 'жена'),
-        Flashcard(frontSide: 'sister', backSide: 'сестра'),
+        Flashcard(frontSide: 'father', backSide: 'отец', isFavorite: false),
+        Flashcard(frontSide: 'mother', backSide: 'мать', isFavorite: false),
+        Flashcard(frontSide: 'son', backSide: 'сын', isFavorite: false),
+        Flashcard(frontSide: 'daughter', backSide: 'дочь', isFavorite: false),
+        Flashcard(frontSide: 'brother', backSide: 'брат', isFavorite: false),
+        Flashcard(frontSide: 'husband', backSide: 'муж', isFavorite: false),
+        Flashcard(frontSide: 'wife', backSide: 'жена', isFavorite: false),
+        Flashcard(frontSide: 'sister', backSide: 'сестра', isFavorite: false),
       ],
     ),
     Collection(
       collectionName: 'birds',
       flashcards: [
-        Flashcard(frontSide: 'Pigeon', backSide: 'голубь'),
-        Flashcard(frontSide: 'Peacock', backSide: 'павлин'),
-        Flashcard(frontSide: 'Parrot', backSide: 'попугай'),
+        Flashcard(frontSide: 'Pigeon', backSide: 'голубь', isFavorite: false),
+        Flashcard(frontSide: 'Peacock', backSide: 'павлин', isFavorite: false),
+        Flashcard(frontSide: 'Parrot', backSide: 'попугай', isFavorite: false),
       ],
     ),
     Collection(
       collectionName: 'vehicles',
       flashcards: [
-        Flashcard(frontSide: 'van', backSide: 'минивэн'),
-        Flashcard(frontSide: 'bus', backSide: 'автобус'),
-        Flashcard(frontSide: 'ambulance', backSide: 'скорая помощь'),
+        Flashcard(frontSide: 'van', backSide: 'минивэн', isFavorite: false),
+        Flashcard(frontSide: 'bus', backSide: 'автобус', isFavorite: false),
       ],
     ),
     Collection(
       collectionName: 'food',
       flashcards: [
-        Flashcard(frontSide: 'Milk', backSide: 'молоко'),
-        Flashcard(frontSide: 'Bread', backSide: 'хлеб'),
-        Flashcard(frontSide: 'Butter', backSide: 'масло'),
+        Flashcard(frontSide: 'Milk', backSide: 'молоко', isFavorite: false),
+        Flashcard(frontSide: 'Bread', backSide: 'хлеб', isFavorite: false),
+        Flashcard(frontSide: 'Butter', backSide: 'масло', isFavorite: false),
       ],
     ),
   ];
 
   @override
-  Map<String, List<Map<String, String>>> toJson() {
-    Map<String, List<Map<String, String>>> tempMap = {};
+  Map<String, List<Map<String, dynamic>>> toJson() {
+    Map<String, List<Map<String, dynamic>>> tempMap = {};
     for (var collection in collections) {
       tempMap.addAll(
         {
@@ -75,6 +75,7 @@ class MockFlashcardsRepository implements FlashcardsRepository {
               {
                 'frontSide': flashcard.frontSide,
                 'backSide': flashcard.backSide,
+                'isFavorite': flashcard.isFavorite,
               }
           ]
         },
@@ -106,4 +107,3 @@ class MockFlashcardsRepository implements FlashcardsRepository {
     return '[\n$output]';
   }
 }
-

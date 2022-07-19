@@ -9,22 +9,24 @@ void main() {
         final flashcard = Flashcard(
           frontSide: 'cat',
           backSide: 'кошка',
+          isFavorite: false,
         );
 
         expect(flashcard.toString(),
-            'Flashcard(frontSide: cat, backSide: кошка)');
+            'Flashcard(frontSide: cat, backSide: кошка, isFavorite: false)');
       },
     );
 
     test('An instance should be returned', () {
-      Map<String, String> map = {
+      Map<String, dynamic> map = {
         'frontSide': 'cat',
         'backSide': 'кошка',
+        'isFavorite': false,
       };
       final flashcard = Flashcard.fromJson(map);
       expect(
         flashcard.toString(),
-        'Flashcard(frontSide: cat, backSide: кошка)',
+        'Flashcard(frontSide: cat, backSide: кошка, isFavorite: false)',
       );
     });
   });

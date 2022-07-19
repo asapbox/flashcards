@@ -56,6 +56,9 @@ class _SwipingAnimationState extends State<SwipingAnimation> {
         debugPrint('Page: ${position + 1}');
         debugPrint('PageValue: ${pageController.page}');
         updateCurrentPageValue();
+
+        context.read<FlashcardManager>().setSelectedFlashcardIndex(position);
+
       },
       controller: pageController,
       itemCount: flashcards.length,

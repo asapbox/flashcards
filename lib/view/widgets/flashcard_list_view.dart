@@ -13,6 +13,11 @@ class _FlashcardListViewState extends State<FlashcardListView> {
   @override
   Widget build(BuildContext context) {
     final flashcards = context.read<FlashcardManager>().fetchSelectedFlashcards;
+
+    bool isFavorite(int index) {
+     return context.watch<FlashcardManager>().fetchSelectedFlashcards[index].isFavorite;
+    }
+
     return Container(
       padding: const EdgeInsets.all(5.0),
       child: ListView.separated(
@@ -25,27 +30,25 @@ class _FlashcardListViewState extends State<FlashcardListView> {
         itemBuilder: (context, index) => Dismissible(
           key: UniqueKey(),
           background: Container(
-            color: Colors.red,
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            alignment: AlignmentDirectional.centerStart,
-            child: IconTheme(
-              data: Theme.of(context).primaryIconTheme,
-              child: const Icon(
-                Icons.delete_forever,
-              ),
-            )
-          ),
+              color: Colors.red,
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              alignment: AlignmentDirectional.centerStart,
+              child: IconTheme(
+                data: Theme.of(context).primaryIconTheme,
+                child: const Icon(
+                  Icons.delete_forever,
+                ),
+              )),
           secondaryBackground: Container(
-            color: Colors.red,
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            alignment: AlignmentDirectional.centerEnd,
-            child: IconTheme(
-              data: Theme.of(context).primaryIconTheme,
-              child: const Icon(
-                Icons.delete_forever,
-              ),
-            )
-          ),
+              color: Colors.red,
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              alignment: AlignmentDirectional.centerEnd,
+              child: IconTheme(
+                data: Theme.of(context).primaryIconTheme,
+                child: const Icon(
+                  Icons.delete_forever,
+                ),
+              )),
           onDismissed: (DismissDirection direction) {
             setState(() {
               context.read<FlashcardManager>().removeFlashcardAt(index);
@@ -61,7 +64,6 @@ class _FlashcardListViewState extends State<FlashcardListView> {
               context.read<FlashcardManager>().setSelectedFlashcardIndex(index);
             },
             child: Card(
-
               elevation: 5.0,
               child: SizedBox(
                 height: 100.0,
@@ -94,10 +96,17 @@ class _FlashcardListViewState extends State<FlashcardListView> {
                           },
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            context.read<FlashcardManager>().updateIsFavoriteAt(index);
+                          },
                           icon: IconTheme(
-                              data: Theme.of(context).primaryIconTheme,
-                              child: const Icon(Icons.favorite_outlined)),
+                            data: Theme.of(context).primaryIconTheme,
+                            child: Icon(
+                              (isFavorite(index))
+                                  ? Icons.favorite_outlined
+                                  : Icons.favorite_border_outlined,
+                            ),
+                          ),
                         ),
                       ],
                     ),

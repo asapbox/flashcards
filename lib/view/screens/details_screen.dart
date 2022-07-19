@@ -7,6 +7,7 @@ import 'package:flashcards/model/model.dart';
 import 'dart:math';
 
 class DetailsScreen extends StatefulWidget {
+
   static MaterialPage page() {
     return MaterialPage(
       name: Paths.detailsScreenPath,
@@ -24,10 +25,13 @@ class DetailsScreen extends StatefulWidget {
 class _DetailsScreenState extends State<DetailsScreen> {
   @override
   Widget build(BuildContext context) {
-    final Flashcard flashcard = context.read<FlashcardManager>().fetchFlashcard;
+    // delete
+    final Flashcard flashcard =
+        context.read<FlashcardManager>().fetchSelectedFlashcard;
     final int? selectedFlashcardIndex =
         context.read<FlashcardManager>().selectedFlashcardIndex;
-    final bool isFavorite = context.watch<FlashcardManager>().isFavorite;
+    final bool isFavorite =
+        context.watch<FlashcardManager>().fetchSelectedFlashcard.isFavorite;
 
     return Scaffold(
       appBar: AppBar(
@@ -50,11 +54,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
             ),
             IconButton(
               onPressed: () {
-                context.read<FlashcardManager>().setIsFavorite();
+                context.read<FlashcardManager>().updateIsFavorite();
               },
-              icon: Icon((isFavorite)
-                  ? Icons.favorite_outlined
-                  : Icons.favorite_border_outlined),
+              icon: Icon(
+                (isFavorite)
+                    ? Icons.favorite_outlined
+                    : Icons.favorite_border_outlined,
+              ),
             ),
             CustomPopupMenuButton(),
           ],

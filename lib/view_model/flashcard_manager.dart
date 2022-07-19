@@ -16,7 +16,6 @@ class FlashcardManager extends ChangeNotifier {
   bool isCreatingNewCollection = false;
   bool isCreatingNewFlashcard = false;
   bool isUpdatingFlashcard = false;
-  bool isFavorite = false;
 
   // choosing appBar title for the Editor screen.
   String get fetchAppBarTitle {
@@ -30,27 +29,24 @@ class FlashcardManager extends ChangeNotifier {
     }
   }
 
-  Flashcard get fetchFlashcard {
+  Flashcard get fetchSelectedFlashcard {
     Collection selectedCollection =
         flashcardsRepository.collections[selectedCollectionIndex!];
     Flashcard flashcard =
         selectedCollection.flashcards[selectedFlashcardIndex!];
     return flashcard;
-    notifyListeners(); //delete
   }
 
   List<Flashcard> get fetchSelectedFlashcards {
     List<Flashcard> flashcards =
         flashcardsRepository.collections[selectedCollectionIndex!].flashcards;
     return flashcards;
-    notifyListeners(); // delete
   }
 
   Collection get fetchSelectedCollection {
     Collection collection =
         flashcardsRepository.collections[selectedCollectionIndex!];
     return collection;
-    notifyListeners(); // delete
   }
 
   List<String> get fetchCollectionTitles {
@@ -61,10 +57,30 @@ class FlashcardManager extends ChangeNotifier {
     return collectionTitles;
   }
 
-  void setIsFavorite() {
-    isFavorite = !isFavorite;
+  void updateIsFavorite() {
+    flashcardsRepository.collections[selectedCollectionIndex!]
+            .flashcards[selectedFlashcardIndex!].isFavorite =
+        !(flashcardsRepository.collections[selectedCollectionIndex!]
+            .flashcards[selectedFlashcardIndex!].isFavorite);
     notifyListeners();
-    debugPrint('isFavorite = $isFavorite');
+    persistenceManager.persistingDataToLocalStorage();
+    debugPrint(
+        'isFavorite of selected flashcard = '
+            '${flashcardsRepository.collections[selectedCollectionIndex!].
+        flashcards[selectedFlashcardIndex!].isFavorite}');
+  }
+
+  void updateIsFavoriteAt(int index) {
+    flashcardsRepository.collections[selectedCollectionIndex!]
+        .flashcards[index].isFavorite =
+    !(flashcardsRepository.collections[selectedCollectionIndex!]
+        .flashcards[index].isFavorite);
+    notifyListeners();
+    persistenceManager.persistingDataToLocalStorage();
+    debugPrint(
+        'isFavorite of selected flashcard = '
+            '${flashcardsRepository.collections[selectedCollectionIndex!].
+        flashcards[index].isFavorite}');
   }
 
   void setSelectedFlashcardIndex(int selectedFlashcardIndex) {
@@ -103,28 +119,11 @@ class FlashcardManager extends ChangeNotifier {
     debugPrint('isUpdatingFlashcard = $isUpdatingFlashcard');
   }
 
-  // delete
-  // void setAction(String actionName, bool isActive) {
-  //   if (actionName == 'isCreatingNewFlashcard') {
-  //     isCreatingNewFlashcard = isActive;
-  //     debugPrint('isCreatingNewFlashcard = $isCreatingNewFlashcard');
-  //   } else {
-  //     isCreatingNewFlashcard = false;
-  //   }
-  //   if (actionName == 'isUpdatingFlashcard') {
-  //     isUpdatingFlashcard = isActive;
-  //     debugPrint('isUpdatingFlashcard = $isUpdatingFlashcard');
-  //   } else {
-  //     isUpdatingFlashcard = false;
-  //   }
-  // }
-
   void removeFlashcardAt(int index) {
-    flashcardsRepository
-        .collections[selectedCollectionIndex!].flashcards.removeAt(index);
+    flashcardsRepository.collections[selectedCollectionIndex!].flashcards
+        .removeAt(index);
     notifyListeners();
     persistenceManager.persistingDataToLocalStorage();
-
   }
 
   // set onDismissible
@@ -139,11 +138,15 @@ class FlashcardManager extends ChangeNotifier {
     required collectionTitle,
     required String frontSide,
     required String backSide,
+    bool isFavorite = false,
   }) {
     if (isCreatingNewCollection) {
-      createNewCollection(collectionTitle, frontSide, backSide);
-    }
-    else if (isCreatingNewFlashcard) {
+      createNewCollection(
+        collectionTitle: collectionTitle,
+        frontSide: frontSide,
+        backSide: backSide,
+      );
+    } else if (isCreatingNewFlashcard) {
       updateCollectionTitle(collectionTitle);
       createNewFlashcard(frontSide: frontSide, backSide: backSide);
     } else {
@@ -155,9 +158,13 @@ class FlashcardManager extends ChangeNotifier {
   void createNewFlashcard({
     required String frontSide,
     required String backSide,
+    bool isFavorite = false,
   }) {
-    Flashcard newFlashcard =
-        Flashcard(frontSide: frontSide, backSide: backSide);
+    Flashcard newFlashcard = Flashcard(
+      frontSide: frontSide,
+      backSide: backSide,
+      isFavorite: isFavorite,
+    );
     flashcardsRepository.collections[selectedCollectionIndex!].flashcards.add(
       newFlashcard,
     );
@@ -181,16 +188,21 @@ class FlashcardManager extends ChangeNotifier {
     persistenceManager.persistingDataToLocalStorage();
   }
 
-  void createNewCollection(
-    String collectionTitle,
-    String frontSide,
-    String backSide,
-  ) {
+  void createNewCollection({
+    required String collectionTitle,
+    required String frontSide,
+    required String backSide,
+    bool isFavorite = false,
+  }) {
     flashcardsRepository.collections.add(
       Collection(
         collectionName: collectionTitle,
         flashcards: [
-          Flashcard(frontSide: frontSide, backSide: backSide),
+          Flashcard(
+            frontSide: frontSide,
+            backSide: backSide,
+            isFavorite: isFavorite,
+          ),
         ],
       ),
     );

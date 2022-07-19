@@ -80,7 +80,7 @@ class AppTheme {
           selectedItemColor: Colors.green,
         ),
         iconTheme: const IconThemeData(
-          size: 32.0,
+          size: 30.0,
           color: Colors.black,
         ),
         primaryIconTheme: const IconThemeData(
@@ -105,7 +105,7 @@ class AppTheme {
         selectedItemColor: Colors.green,
       ),
       iconTheme: const IconThemeData(
-        size: 32.0,
+        size: 30.0,
         color: Colors.white,
       ),
       primaryIconTheme: const IconThemeData(

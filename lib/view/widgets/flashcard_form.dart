@@ -48,12 +48,12 @@ class _FlashcardFormState extends State<FlashcardForm> {
     frontSideTextEditingController.text =
         (isCreatingNewCollection || isCreatingNewFlashcard)
             ? ''
-            : context.read<FlashcardManager>().fetchFlashcard.frontSide;
+            : context.read<FlashcardManager>().fetchSelectedFlashcard.frontSide;
 
     backSideTextEditingController.text =
         (isCreatingNewCollection || isCreatingNewFlashcard)
             ? ''
-            : context.read<FlashcardManager>().fetchFlashcard.backSide;
+            : context.read<FlashcardManager>().fetchSelectedFlashcard.backSide;
 
     return Scaffold(
       appBar: AppBar(

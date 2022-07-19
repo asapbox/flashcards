@@ -21,7 +21,7 @@ class PersistenceManager extends ChangeNotifier {
   }
 
   Future<void> writingToFile(
-      Map<String, List<Map<String, String>>> jsonCollections) async {
+      Map<String, List<Map<String, dynamic>>> jsonCollections) async {
     final file = await _localFile;
 
     // Write the file
@@ -43,23 +43,17 @@ class PersistenceManager extends ChangeNotifier {
   Future<void> persistingDataToLocalStorage() async {
     await writingToFile(flashcardRepository.toJson());
     notifyListeners();
-    // delete
-    // flashcardRepository.collections.clear();
-    // debugPrint(FlashcardsRepository().toString());
   }
 
   // returning the execution time in milliseconds.
   Future<int> restoringData() async {
     final beginningTime = DateTime.now();
-
-    // need to set a condition to handle the first launch when there is no saved file
     final rawString = await readingFromFile();
     debugPrint('rawString = $rawString');
 
     if (rawString != 'error') {
       final decodedJson = json.decode(rawString) as Map<String, dynamic>;
       debugPrint('decodedJson.isNotEmpty = ${decodedJson.isNotEmpty}');
-
       if (decodedJson.isNotEmpty) {
         flashcardRepository.collections.clear();
         // parsing from Json file and adding flashcards into collections
@@ -67,9 +61,6 @@ class PersistenceManager extends ChangeNotifier {
         notifyListeners();
       }
     }
-
-    // delete
-    // debugPrint('$flashcardRepository');
 
     final endingTime = DateTime.now();
     int executionTime = endingTime.difference(beginningTime).inMilliseconds;

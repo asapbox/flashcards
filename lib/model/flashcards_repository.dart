@@ -8,9 +8,9 @@ class FlashcardsRepository {
     Collection(
       collectionName: 'Animals (Test collection)',
       flashcards: [
-        Flashcard(frontSide: 'cat', backSide: 'кошка'),
-        Flashcard(frontSide: 'dog', backSide: 'собака'),
-        Flashcard(frontSide: 'duck', backSide: 'утка'),
+        Flashcard(frontSide: 'cat', backSide: 'кошка', isFavorite: false),
+        Flashcard(frontSide: 'dog', backSide: 'собака', isFavorite: false),
+        Flashcard(frontSide: 'duck', backSide: 'утка', isFavorite: false),
       ],
     ),
   ];
@@ -19,13 +19,12 @@ class FlashcardsRepository {
 
   FlashcardsRepository._();
 
-  // replace MockFlashcardsRepository() with _instance
-  factory FlashcardsRepository() =>
-      // MockFlashcardsRepository();
-      _instance;
+  // replace _instance with MockFlashcardsRepository() to retrieve mock data
+  // MockFlashcardsRepository();
+  factory FlashcardsRepository() => _instance;
 
-  Map<String, List<Map<String, String>>> toJson() {
-    Map<String, List<Map<String, String>>> tempMap = {};
+  Map<String, List<Map<String, dynamic>>> toJson() {
+    Map<String, List<Map<String, dynamic>>> tempMap = {};
     for (var collection in collections) {
       tempMap.addAll(
         {
@@ -34,6 +33,7 @@ class FlashcardsRepository {
               {
                 'frontSide': flashcard.frontSide,
                 'backSide': flashcard.backSide,
+                'isFavorite': flashcard.isFavorite,
               }
           ]
         },
