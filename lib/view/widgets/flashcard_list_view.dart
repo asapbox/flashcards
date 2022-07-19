@@ -13,84 +13,101 @@ class _FlashcardListViewState extends State<FlashcardListView> {
   @override
   Widget build(BuildContext context) {
     final flashcards = context.read<FlashcardManager>().fetchSelectedFlashcards;
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        ListView.separated(
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          separatorBuilder: (context, index) => const Divider(
-            color: Colors.black,
+    return Container(
+      padding: const EdgeInsets.all(5.0),
+      child: ListView.separated(
+        scrollDirection: Axis.vertical,
+        // shrinkWrap: true,
+        separatorBuilder: (context, index) => const SizedBox(
+          height: 4.0,
+        ),
+        itemCount: flashcards.length,
+        itemBuilder: (context, index) => Dismissible(
+          key: UniqueKey(),
+          background: Container(
+            color: Colors.red,
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            alignment: AlignmentDirectional.centerStart,
+            child: IconTheme(
+              data: Theme.of(context).primaryIconTheme,
+              child: const Icon(
+                Icons.delete_forever,
+              ),
+            )
           ),
-          itemCount: flashcards.length,
-          itemBuilder: (context, index) => Dismissible(
-            key: UniqueKey(),
-            background: Container(
-              color: Colors.red,
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              alignment: AlignmentDirectional.centerStart,
+          secondaryBackground: Container(
+            color: Colors.red,
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            alignment: AlignmentDirectional.centerEnd,
+            child: IconTheme(
+              data: Theme.of(context).primaryIconTheme,
               child: const Icon(
                 Icons.delete_forever,
               ),
-            ),
-            secondaryBackground: Container(
-              color: Colors.red,
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              alignment: AlignmentDirectional.centerEnd,
-              child: const Icon(
-                Icons.delete_forever,
-              ),
-            ),
-            onDismissed: (DismissDirection direction) {
-              setState(() {
-                context.read<FlashcardManager>().removeFlashcardAt(index);
-              });
+            )
+          ),
+          onDismissed: (DismissDirection direction) {
+            setState(() {
+              context.read<FlashcardManager>().removeFlashcardAt(index);
+            });
 
-              //showing a snackbar.
-              ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('flashcard is deleted')));
+            //showing a snackBar.
+            ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('flashcard is deleted')));
+          },
+          child: GestureDetector(
+            onTap: () {
+              context.read<NavigationManager>().setDetailsScreen(true);
+              context.read<FlashcardManager>().setSelectedFlashcardIndex(index);
             },
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GestureDetector(
-                onTap: () {
-                  context.read<NavigationManager>().setDetailsScreen(true);
-                  context
-                      .read<FlashcardManager>()
-                      .setSelectedFlashcardIndex(index);
-                },
-                child: Row(
-                  children: [
-                    Flexible(
-                      flex: 1,
-                      child: Center(
-                        child: Text(flashcards[index].frontSide),
+            child: Card(
+
+              elevation: 5.0,
+              child: SizedBox(
+                height: 100.0,
+                child: Center(
+                  child: ListTile(
+                    title: Padding(
+                      padding: const EdgeInsets.fromLTRB(20.0, 10, 0, 10),
+                      child: Text(
+                        flashcards[index].frontSide,
+                        style: Theme.of(context).textTheme.headline3,
                       ),
                     ),
-                    Center(
-                      // editing an existing flashcard.
-                      child: IconButton(
-                        icon: const Icon(Icons.edit),
-                        onPressed: () {
-                          context
-                              .read<NavigationManager>()
-                              .setEditorScreen(true);
-                          context
-                              .read<FlashcardManager>()
-                              .setSelectedFlashcardIndex(index);
-                          context
-                              .read<FlashcardManager>()
-                              .setIsUpdatingFlashcard(true);
-                        },
-                      ),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          icon: IconTheme(
+                              data: Theme.of(context).primaryIconTheme,
+                              child: const Icon(Icons.edit)),
+                          onPressed: () {
+                            context
+                                .read<NavigationManager>()
+                                .setEditorScreen(true);
+                            context
+                                .read<FlashcardManager>()
+                                .setSelectedFlashcardIndex(index);
+                            context
+                                .read<FlashcardManager>()
+                                .setIsUpdatingFlashcard(true);
+                          },
+                        ),
+                        IconButton(
+                          onPressed: () {},
+                          icon: IconTheme(
+                              data: Theme.of(context).primaryIconTheme,
+                              child: const Icon(Icons.favorite_outlined)),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
             ),
           ),
         ),
-      ],
+      ),
     );
   }
 }

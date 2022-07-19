@@ -8,7 +8,8 @@ class CustomPopupMenuButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton(
-      icon: const Icon(Icons.more_horiz_outlined),
+      icon: Icon(Icons.more_horiz_outlined,
+        size: Theme.of(context).iconTheme.size,),
       itemBuilder: (context) => [
         PopupMenuItem(
           value: 1,

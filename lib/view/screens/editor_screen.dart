@@ -9,7 +9,7 @@ class EditorScreen extends StatelessWidget {
     return MaterialPage(
       name: Paths.editorScreenPath,
       key: ValueKey(Paths.editorScreenPath),
-      child: EditorScreen(),
+      child: const EditorScreen(),
     );
   }
 
@@ -19,9 +19,8 @@ class EditorScreen extends StatelessWidget {
     'Editing',
   ];
 
-  EditorScreen({
+  const EditorScreen({
     Key? key,
-    // required this.title,
   }) : super(key: key);
 
   @override

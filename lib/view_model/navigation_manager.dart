@@ -54,7 +54,9 @@ class NavigationManager extends ChangeNotifier {
 
   Future<void> initializingApp() async {
     // restoringData method returning the execution time in milliseconds
-    final int difference = await persistenceManager.restoringData();
+    final int difference =
+    // 0;
+    await persistenceManager.restoringData();
 
     //if-condition to extend the time of showing the splash screen.
     if (difference < 2000) {

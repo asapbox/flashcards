@@ -13,7 +13,7 @@ class HomeScreen extends StatelessWidget {
     return MaterialPage(
       name: Paths.homeScreenPath,
       key: ValueKey(Paths.homeScreenPath),
-      child: HomeScreen(),
+      child: const HomeScreen(),
     );
   }
 
@@ -41,7 +41,12 @@ class HomeScreen extends StatelessWidget {
             IconButton(
               // choose a random set to study and move to the details screen.
               onPressed: () {},
-              icon: const Icon(Icons.question_mark_outlined),
+              icon: IconTheme(
+                data: Theme.of(context).primaryIconTheme,
+                child: const Icon(
+                  Icons.question_mark_outlined,
+                ),
+              ),
             ),
             IconButton(
               onPressed: () {
@@ -50,9 +55,11 @@ class HomeScreen extends StatelessWidget {
                     .read<FlashcardManager>()
                     .setIsCreatingNewCollection(true);
               },
-              icon: const Icon(Icons.add_outlined),
+              icon: const Icon(
+                Icons.add_outlined,
+              ),
             ),
-            CustomPopupMenuButton(),
+            const CustomPopupMenuButton(),
           ],
         ),
       ),

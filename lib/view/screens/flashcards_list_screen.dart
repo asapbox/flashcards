@@ -11,13 +11,12 @@ class FlashcardsListScreen extends StatelessWidget {
     return MaterialPage(
       name: Paths.flashcardsListScreenPath,
       key: ValueKey(Paths.flashcardsListScreenPath),
-      child: FlashcardsListScreen(),
+      child: const FlashcardsListScreen(),
     );
   }
 
   const FlashcardsListScreen({
     Key? key,
-    //  required this.title,
   }) : super(key: key);
 
   @override
@@ -60,7 +59,7 @@ class FlashcardsListScreen extends StatelessWidget {
               },
               icon: const Icon(Icons.add_outlined),
             ),
-            CustomPopupMenuButton(),
+            const CustomPopupMenuButton(),
           ],
         ),
       ),

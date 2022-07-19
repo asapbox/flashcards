@@ -7,9 +7,6 @@ import 'dart:convert';
 class PersistenceManager extends ChangeNotifier {
   final flashcardRepository = FlashcardsRepository();
 
-  // delete
-  // Map<String, dynamic> decodedJson = {};
-
   // Finding the correct local path
   Future<String> get _localPath async {
     final directory = await getApplicationDocumentsDirectory();
@@ -23,12 +20,12 @@ class PersistenceManager extends ChangeNotifier {
     return File('$path/flashcards_json.txt');
   }
 
-  Future<File> writingToFile(
+  Future<void> writingToFile(
       Map<String, List<Map<String, String>>> jsonCollections) async {
     final file = await _localFile;
 
     // Write the file
-    return file.writeAsString(json.encode(jsonCollections));
+    file.writeAsString(json.encode(jsonCollections));
   }
 
   Future<String> readingFromFile() async {
@@ -39,7 +36,7 @@ class PersistenceManager extends ChangeNotifier {
       return rawString;
     } catch (e) {
       debugPrint(e.toString());
-      return 'readingFromFile() method returned an Error: $e';
+      return 'error';
     }
   }
 
@@ -55,19 +52,24 @@ class PersistenceManager extends ChangeNotifier {
   Future<int> restoringData() async {
     final beginningTime = DateTime.now();
 
+    // need to set a condition to handle the first launch when there is no saved file
     final rawString = await readingFromFile();
-    final decodedJson = json.decode(rawString) as Map<String, dynamic>;
-    debugPrint('decodedJson.isNotEmpty = ${decodedJson.isNotEmpty}');
+    debugPrint('rawString = $rawString');
 
-    if (decodedJson.isNotEmpty) {
-      flashcardRepository.collections.clear();
-      // parsing from Json file and adding flashcards into collections
-      flashcardRepository.parseFromJson(decodedJson);
-      notifyListeners();
+    if (rawString != 'error') {
+      final decodedJson = json.decode(rawString) as Map<String, dynamic>;
+      debugPrint('decodedJson.isNotEmpty = ${decodedJson.isNotEmpty}');
+
+      if (decodedJson.isNotEmpty) {
+        flashcardRepository.collections.clear();
+        // parsing from Json file and adding flashcards into collections
+        flashcardRepository.parseFromJson(decodedJson);
+        notifyListeners();
+      }
     }
 
     // delete
-    debugPrint('$flashcardRepository');
+    // debugPrint('$flashcardRepository');
 
     final endingTime = DateTime.now();
     int executionTime = endingTime.difference(beginningTime).inMilliseconds;

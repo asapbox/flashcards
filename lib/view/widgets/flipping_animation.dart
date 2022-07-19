@@ -97,12 +97,17 @@ class _FlippingAnimationState extends State<FlippingAnimation> {
 
   Widget _buildFrontSide(String frontSide, int selectedFlashcardIndex) {
     return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
       key: ValueKey('frontSideIndex:$selectedFlashcardIndex'),
-      child: SizedBox(
-        width: 300.0,
-        height: 600.0,
+      child: Container(
+        margin: const EdgeInsets.all(20.0),
         child: Center(
-          child: Text(frontSide),
+          child: Text(
+            frontSide,
+            style: Theme.of(context).textTheme.headline2,
+          ),
         ),
       ),
     );
@@ -110,12 +115,17 @@ class _FlippingAnimationState extends State<FlippingAnimation> {
 
   Widget _buildBackSide(String backSide, int selectedFlashcardIndex) {
     return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
       key: ValueKey('backSideIndex:$selectedFlashcardIndex'),
-      child: SizedBox(
-        width: 300.0,
-        height: 600.0,
+      child: Container(
+        margin: const EdgeInsets.all(20.0),
         child: Center(
-          child: Text(backSide),
+          child: Text(
+            backSide,
+            style: Theme.of(context).textTheme.headline2,
+          ),
         ),
       ),
     );
