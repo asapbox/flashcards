@@ -1,5 +1,4 @@
 import 'package:flashcards/model/model.dart';
-import 'package:flashcards/persistence/persistence_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flashcards/view/widgets/widgets.dart';
 import 'package:provider/provider.dart';
@@ -39,8 +38,13 @@ class HomeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             IconButton(
-              // choose a random set to study and move to the details screen.
-              onPressed: () {},
+              tooltip: 'Picking a random collection',
+              onPressed: () {
+                context
+                    .read<FlashcardManager>()
+                    .setRandomCollectionIndex();
+                context.read<NavigationManager>().setFlashcardListScreen(true);
+              },
               icon: IconTheme(
                 data: Theme.of(context).primaryIconTheme,
                 child: const Icon(
@@ -49,6 +53,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             IconButton(
+              tooltip: 'Creating a new collection',
               onPressed: () {
                 context.read<NavigationManager>().setEditorScreen(true);
                 context

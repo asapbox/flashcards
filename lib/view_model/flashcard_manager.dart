@@ -2,6 +2,7 @@ import 'package:flashcards/persistence/persistence_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flashcards/model/model.dart';
 import 'package:flashcards/view/screens/screens.dart';
+import 'dart:math';
 
 ///Managing add, read, update and delete operations
 ///for the class Flashcard
@@ -16,6 +17,15 @@ class FlashcardManager extends ChangeNotifier {
   bool isCreatingNewCollection = false;
   bool isCreatingNewFlashcard = false;
   bool isUpdatingFlashcard = false;
+
+  void setRandomCollectionIndex(
+  ) {
+    final int collectionsLength = flashcardsRepository.collections.length;
+    final int randomCollectionIndex = Random().nextInt(collectionsLength);
+    setSelectedCollectionIndex(randomCollectionIndex);
+    notifyListeners();
+    debugPrint('randomCollectionIndex = $randomCollectionIndex');
+  }
 
   // choosing appBar title for the Editor screen.
   String get fetchAppBarTitle {
@@ -64,23 +74,19 @@ class FlashcardManager extends ChangeNotifier {
             .flashcards[selectedFlashcardIndex!].isFavorite);
     notifyListeners();
     persistenceManager.persistingDataToLocalStorage();
-    debugPrint(
-        'isFavorite of selected flashcard = '
-            '${flashcardsRepository.collections[selectedCollectionIndex!].
-        flashcards[selectedFlashcardIndex!].isFavorite}');
+    debugPrint('isFavorite of selected flashcard = '
+        '${flashcardsRepository.collections[selectedCollectionIndex!].flashcards[selectedFlashcardIndex!].isFavorite}');
   }
 
   void updateIsFavoriteAt(int index) {
-    flashcardsRepository.collections[selectedCollectionIndex!]
-        .flashcards[index].isFavorite =
-    !(flashcardsRepository.collections[selectedCollectionIndex!]
-        .flashcards[index].isFavorite);
+    flashcardsRepository.collections[selectedCollectionIndex!].flashcards[index]
+            .isFavorite =
+        !(flashcardsRepository.collections[selectedCollectionIndex!]
+            .flashcards[index].isFavorite);
     notifyListeners();
     persistenceManager.persistingDataToLocalStorage();
-    debugPrint(
-        'isFavorite of selected flashcard = '
-            '${flashcardsRepository.collections[selectedCollectionIndex!].
-        flashcards[index].isFavorite}');
+    debugPrint('isFavorite of selected flashcard = '
+        '${flashcardsRepository.collections[selectedCollectionIndex!].flashcards[index].isFavorite}');
   }
 
   void setSelectedFlashcardIndex(int selectedFlashcardIndex) {

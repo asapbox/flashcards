@@ -26,27 +26,25 @@ class _TitlesListViewState extends State<TitlesListView> {
           return Dismissible(
             key: UniqueKey(),
             background: Container(
-              color: Colors.red,
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              alignment: AlignmentDirectional.centerStart,
-              child: IconTheme(
-                data: Theme.of(context).primaryIconTheme,
-                child: const Icon(
-                  Icons.delete_forever,
-                ),
-              )
-            ),
+                color: Colors.red,
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                alignment: AlignmentDirectional.centerStart,
+                child: IconTheme(
+                  data: Theme.of(context).primaryIconTheme,
+                  child: const Icon(
+                    Icons.delete_forever,
+                  ),
+                )),
             secondaryBackground: Container(
-              color: Colors.red,
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              alignment: AlignmentDirectional.centerEnd,
-              child: IconTheme(
-                data: Theme.of(context).primaryIconTheme,
-                child: const Icon(
-                  Icons.delete_forever,
-                ),
-              )
-            ),
+                color: Colors.red,
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                alignment: AlignmentDirectional.centerEnd,
+                child: IconTheme(
+                  data: Theme.of(context).primaryIconTheme,
+                  child: const Icon(
+                    Icons.delete_forever,
+                  ),
+                )),
             onDismissed: (DismissDirection direction) {
               setState(
                 () {
@@ -90,11 +88,11 @@ class _TitlesListViewState extends State<TitlesListView> {
                   ),
                   onTap: () {
                     context
-                        .read<NavigationManager>()
-                        .setFlashcardListScreen(true);
-                    context
                         .read<FlashcardManager>()
                         .setSelectedCollectionIndex(index);
+                    context
+                        .read<NavigationManager>()
+                        .setFlashcardListScreen(true);
                   },
                 ),
               ),

@@ -15,7 +15,10 @@ class _FlashcardListViewState extends State<FlashcardListView> {
     final flashcards = context.read<FlashcardManager>().fetchSelectedFlashcards;
 
     bool isFavorite(int index) {
-     return context.watch<FlashcardManager>().fetchSelectedFlashcards[index].isFavorite;
+      return context
+          .watch<FlashcardManager>()
+          .fetchSelectedFlashcards[index]
+          .isFavorite;
     }
 
     return Container(
@@ -60,8 +63,8 @@ class _FlashcardListViewState extends State<FlashcardListView> {
           },
           child: GestureDetector(
             onTap: () {
-              context.read<NavigationManager>().setDetailsScreen(true);
               context.read<FlashcardManager>().setSelectedFlashcardIndex(index);
+              context.read<NavigationManager>().setDetailsScreen(true);
             },
             child: Card(
               elevation: 5.0,
@@ -85,19 +88,21 @@ class _FlashcardListViewState extends State<FlashcardListView> {
                               child: const Icon(Icons.edit)),
                           onPressed: () {
                             context
-                                .read<NavigationManager>()
-                                .setEditorScreen(true);
-                            context
                                 .read<FlashcardManager>()
                                 .setSelectedFlashcardIndex(index);
                             context
                                 .read<FlashcardManager>()
                                 .setIsUpdatingFlashcard(true);
+                            context
+                                .read<NavigationManager>()
+                                .setEditorScreen(true);
                           },
                         ),
                         IconButton(
                           onPressed: () {
-                            context.read<FlashcardManager>().updateIsFavoriteAt(index);
+                            context
+                                .read<FlashcardManager>()
+                                .updateIsFavoriteAt(index);
                           },
                           icon: IconTheme(
                             data: Theme.of(context).primaryIconTheme,
