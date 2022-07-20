@@ -25,9 +25,8 @@ class DetailsScreen extends StatefulWidget {
 class _DetailsScreenState extends State<DetailsScreen> {
   @override
   Widget build(BuildContext context) {
-    // delete
-    final Flashcard flashcard =
-        context.read<FlashcardManager>().fetchSelectedFlashcard;
+    final String title =
+        context.read<FlashcardManager>().fetchSelectedCollection.collectionName;
     final int? selectedFlashcardIndex =
         context.read<FlashcardManager>().selectedFlashcardIndex;
     final bool isFavorite =
@@ -36,7 +35,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text('Details screen'),
+        title: Text(title),
       ),
       body: SwipingAnimation(
         selectedFlashcardIndex: selectedFlashcardIndex!,

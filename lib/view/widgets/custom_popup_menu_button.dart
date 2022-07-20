@@ -30,15 +30,16 @@ class CustomPopupMenuButton extends StatelessWidget {
             ],
           ),
         ),
-        PopupMenuItem(
-          value: 2,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: const [
-              Text('My Favorites'),
-            ],
-          ),
-        ),
+        // need to add a feature for making a list of favorite flashcards.
+        // PopupMenuItem(
+        //   value: 2,
+        //   child: Row(
+        //     mainAxisAlignment: MainAxisAlignment.start,
+        //     children: const [
+        //       Text('My Favorites'),
+        //     ],
+        //   ),
+        // ),
       ],
     );
   }
