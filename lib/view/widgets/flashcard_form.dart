@@ -67,6 +67,7 @@ class _FlashcardFormState extends State<FlashcardForm> {
           autovalidateMode: AutovalidateMode.onUserInteraction,
           key: _inputFormKey,
           child: ListView(
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
             children: <Widget>[
               // collection name
               TextFormField(
